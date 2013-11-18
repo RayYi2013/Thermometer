@@ -42,3 +42,60 @@ app.factory('TemperatureService', function($http) {
     return myService;
 });
 
+app.factory('MainCtrlHelper', function() {
+    var myService = {
+        getFormatedTemperature: function(Settings, temperature) {
+            // temperature is Celsius
+            if(Settings.format == 'f'){
+                //convert Celsius to Fahrenheit.
+                var tc=parseInt(temperature);
+                var tf=((9/5)*tc)+32;
+                return Math.round(tf*Math.pow(10,2))/Math.pow(10,2);
+            }
+            else{
+                return temperature;
+            }
+
+        },
+        checkThreshold: function($scope, Settings, temperature) {
+            $scope.temperature = this.getFormatedTemperature(Settings,temperature);
+
+            var threshold = Settings.findThreshold(temperature);
+            var reachThreshold = false;
+            if(threshold){
+                $scope.direction = '';
+                var changed = false;
+                if(!$scope.threshold){
+                    changed = true;
+                }
+                else{
+                    changed = $scope.threshold.name != threshold.name
+                }
+
+
+                if(changed){
+                    if(threshold.direction.up || threshold.direction.down){
+                        if(threshold.direction.up && ($scope.currentTemperature < temperature)){
+                            $scope.direction = 'up';
+                        }
+                        if(threshold.direction.down && ($scope.currentTemperature > temperature)){
+                            $scope.direction = 'down';
+                        }
+
+                        if($scope.direction.length>0){
+                            reachThreshold = changed;
+                        }
+                    }
+                    else{
+                        reachThreshold = changed;
+                    }
+                    $scope.threshold = threshold;
+                }
+            }
+
+            return reachThreshold;
+        }
+    };
+    return myService;
+});
+

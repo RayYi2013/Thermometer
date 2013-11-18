@@ -15,55 +15,32 @@ app.config(function($routeProvider) {
 });
 
 
-app.controller('MainCtrl', ['$scope', '$route','Settings','TemperatureService',
-  function($scope, $route,  Settings, TemperatureService) {
-      $scope.directoin = '';
+app.controller('MainCtrl', ['$scope', '$route','Settings','TemperatureService','MainCtrlHelper',
+  function($scope, $route,  Settings, TemperatureService,MainCtrlHelper) {
+      $scope.direction = '';
       $scope.format = Settings.format;
-    function updateStatus(temperature){
-        if(Settings.format == 'f'){
-            //convert Celsius to Fahrenheit.
-            var tc=parseInt(temperature);
-            var tf=((9/5)*tc)+32;
-            $scope.temperature = Math.round(tf*Math.pow(10,2))/Math.pow(10,2);
-        }
-        else{
-            $scope.temperature = temperature;
-        }
 
-        var threshold = Settings.findThreshold(temperature);
-        if(threshold){
-            $scope.directoin = '';
-            var changed = false;
-            if(!$scope.threshold){
-                changed = true;
-            }
-            else{
-                changed = $scope.threshold.name != threshold.name
-            }
-            if(changed){
-                if(threshold.direction.up && ($scope.threshold && $scope.threshold.point < temperature)){
-                    $scope.directoin = 'up';
-                }
-                if(threshold.direction.down && ($scope.threshold && $scope.threshold.point > temperature)){
-                    $scope.directoin = 'down';
-                }
-                $scope.threshold = threshold;
-            }
-        }
-
-    }
       var getTemperature = function(){
         var promise = TemperatureService.getTemperature();
         promise.then(function(temperature) {
             if(angular.isDefined(temperature)) {
-                updateStatus(temperature);
-                currentTemperature = temperature;
-                if($route.current.templateUrl == 'main.html'){
-                    setTimeout(getTemperature,Settings.frequence*1000);
+                var reachThreshold = MainCtrlHelper.checkThreshold($scope, Settings,temperature);
+                $scope.currentTemperature = temperature;
+                if(reachThreshold){
+                    $('#warningModal').modal('show');
+                }
+                else{
+                    if($route.current.templateUrl == 'main.html'){
+                        setTimeout(getTemperature,Settings.frequence*1000);
+                    }
                 }
             }
         });
     };
+
+      $('#warningModal').on('hidden.bs.modal', function () {
+          getTemperature();
+      })
 
       getTemperature();
 
