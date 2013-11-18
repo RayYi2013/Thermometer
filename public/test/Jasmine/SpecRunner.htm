@@ -1,0 +1,33 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Jasmine Test Runner</title>
+
+    <!-- Jasmine stylesheet -->
+    <link rel="stylesheet" type="text/css" href="css/Jasmine.css">
+
+    <!-- Jasmine core and HTML -->
+    <script type="text/javascript" src="js/jasmine.js"></script>
+    <script type="text/javascript" src="js/jasmine-html.js"></script>
+    <script type="text/javascript" src="js/jasmine.async.js"></script>
+
+    <!-- JavaScript libraries on which source depends -->
+    <script type="text/javascript" src="../../js/angular.min.js"></script>
+    <script type="text/javascript" src="js/angular-mocks.js"></script>
+
+    <!-- Script source to test and other files on which source depends -->
+    <script type="text/javascript" src="../../app.js"></script>
+    <script type="text/javascript" src="../../data.js"></script>
+    
+    <!-- Test script -->
+    <!--<script type="text/javascript" src="ShoppingCartControllerSpec.js"></script>-->
+    <script type="text/javascript" src="app-test.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().execute();
+    </script>
+</body>
+</html>

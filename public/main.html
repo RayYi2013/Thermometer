@@ -1,0 +1,10 @@
+<div class="panel panel-default thermometer-panel center-block jumbotron">
+    <div class="panel-heading">
+
+        <h3 class="panel-title">Thermometer<a class="pull-right glyphicon glyphicon-cog" ng-href="/#settings"></a></h3>
+    </div>
+    <div class="panel-body ">
+        <h1><span class="label label-default center-block">{{temperature}} <span ng-show="format=='c'">&#8451;</span><span ng-show="format=='f'">&#8457;</span></span></h1>
+        <h2 ng-show="threshold"><span class="label label-danger center-block">{{threshold.name}}<span ng-show="direction=='down'" class="glyphicon glyphicon-arrow-down"></span><span ng-show="direction=='up'" class="glyphicon glyphicon-arrow-up"></span></span></h2>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+body {
+    min-height: 2000px;
+    padding-top: 70px;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.thermometer-panel {
+    width: 400px
+}
+.thermometer-settings-panel {
+    width: 400px
+}
