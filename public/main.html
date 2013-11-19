@@ -20,7 +20,14 @@
                 <h4 class="modal-title" id="myModalLabel">Warning</h4>
             </div>
             <div class="modal-body">
-                ...
+                <div class="panel panel-default jumbotron">
+                    <div class="panel-heading">
+                        Temperature is {{temperature}}<span ng-show="format=='c'">&#8451;</span><span ng-show="format=='f'">&#8457;</span> now.
+                    </div>
+                    <div class="panel-body ">
+                        It reach <span ng-show="direction=='down'" >down to </span><span ng-show="direction=='up'" >up to</span>{{threshold.name}}.
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" ng-click="closeWarning"  data-dismiss="modal">Close</button>

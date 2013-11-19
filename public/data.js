@@ -6,14 +6,14 @@ app.service('Settings',function (){
     this.frequence = 5; // seconds
 
     this.thresholds = [
-        {name:'Freeze', point:0, flunctuation:0.5, direction:{up:false,down:false}},
-        {name:'Boiler', point:100, flunctuation:0.5, direction:{up:false,down:false}}
+        {name:'Freeze', point:0, fluctuation:0.5, direction:{up:false,down:false}},
+        {name:'Boiler', point:100, fluctuation:0.5, direction:{up:false,down:false}}
     ];
 
     this.findThreshold = function(temperature){
         var threshold = null;
         angular.forEach(this.thresholds,function(item,index){
-            if((item.point - item.flunctuation)<=temperature && temperature <= (item.point + item.flunctuation)){
+            if((item.point - item.fluctuation)<=temperature && temperature <= (item.point + item.fluctuation)){
                 threshold = item;
             }
         });
@@ -91,6 +91,9 @@ app.factory('MainCtrlHelper', function() {
                     }
                     $scope.threshold = threshold;
                 }
+            }
+            else{
+                delete $scope.threshold;
             }
 
             return reachThreshold;

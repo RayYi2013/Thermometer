@@ -7,6 +7,11 @@ app.config(function($routeProvider) {
             templateUrl: 'main.html',
             controller: 'MainCtrl'
         })
+        .when('/settings/threshold/:id', {
+            name: 'threshold',
+            templateUrl: 'threshold.html',
+            controller: 'ThresholdCtrl'
+        })
         .when('/settings', {
             templateUrl: 'settings.html',
             controller: 'SettingsCtrl'
@@ -46,23 +51,27 @@ app.controller('MainCtrl', ['$scope', '$route','Settings','TemperatureService','
 
   }]);
 
-app.controller('NameSearchListCtrl', ['$scope','NameSearchList','SearchListCtrlFunc',
-    function($scope,  NameSearchList, SearchListCtrlFunc) {
-        return SearchListCtrlFunc($scope,NameSearchList);
+app.controller('SettingsCtrl', ['$scope', '$location', 'Settings',
+    function($scope, $location, Settings) {
+        $scope.settings = Settings;
+
+        $scope.deleteThreshold = function(index){
+            Settings.thresholds.splice(index,1);
+        };
+
+        $scope.addThreshold = function(){
+            Settings.thresholds.push({name:'NewName', point:50, fluctuation:0.5, direction:{up:false,down:false}});
+            var path='/settings/threshold/' + (Settings.thresholds.length -1);
+
+            $location.path(path);
+            $location.replace();
+        };
     }]);
 
 
-app.directive('whenScrolled', function() {
-    return function(scope, elm, attr) {
-        var raw = elm[0];
+app.controller('ThresholdCtrl', ['$scope',  '$routeParams','Settings',
+    function($scope,  $routeParams,  Settings) {
+        $scope.threshold = Settings.thresholds[$routeParams.id];
+    }]);
 
-        elm.bind('scroll', function() {
-            if ((raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) && !scope.firstPage ){
-                scope.$apply(attr.whenScrolled);
-                console.log('start scrolled.' + '  raw.scrollTop is: ' + raw.scrollTop + '  raw.offsetHeight is: ' + raw.offsetHeight + '  raw.scrollHeight is: ' + raw.scrollHeight);
-            }
 
-            scope.firstPage = false;
-        });
-    };
-});

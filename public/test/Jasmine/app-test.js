@@ -130,6 +130,11 @@ describe("MainCtrlHelper", function () {
             temperature = -3;
             reachThreshold = MainCtrlHelper.checkThreshold(ctrlScope, Settings,temperature);
             expect(reachThreshold).toBeFalsy();
+
+            temperature = 0;
+            reachThreshold = MainCtrlHelper.checkThreshold(ctrlScope, Settings,temperature);
+            expect(reachThreshold).toBeTruthy();
+
         });
 
         it('should get down direction', function () {
