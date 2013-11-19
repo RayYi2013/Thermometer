@@ -26,3 +26,14 @@ The user may only want to be informed that the temperature has reached 0 C on
 
 It may also be important for some users to be informed that a threshold has been reached only if the threshold was reached from a certain direction. For example, some users may only care about a freezing point threshold if the previous temperature was above freezing (i.e. they only care about the threshold if it occurred while the temperature was dropping).
 
+Develope Documents:
+-------------------------
+1. Software Requirements Specification, /doc/Thermometer App SRS.docx.
+2. System Design, /doc/Thermometer App Design.docx
+3. Test script, /public/test/Jasmine/app-test.js
+
+Usage:
+-------------------------
+1. run below command in root folder:
+    node app
+2. start browser, goto http://localhost:3000/
